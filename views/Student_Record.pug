@@ -1,0 +1,59 @@
+doctype html
+html
+    head
+        link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', rel='stylesheet', integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm", crossorigin="anonymous")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl", crossorigin="anonymous")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+        
+        title=name
+    body
+        div.container
+
+            br
+            br
+            h1 Students detail :
+            br 
+            a(href="/Teacher_Profile/"+ teacherid)
+                button.btn.btn-primary(type="button" style="margin-right: 16px") Show My Profile
+            br
+            br
+            a(href="/Add_Student/"+ teacherid)
+                button.btn.btn-primary(type="button" style="margin-right: 16px") Add Student
+            br
+            table.table
+                thead.thead-dark
+                    tr
+                        td First Name
+                        td Last Name
+                        td Email
+                        td class
+                        td Details
+                        td Edit
+                        td delete
+                tbody
+                    each val in studentList
+                        tr 
+                            td= val.name
+                            td= val.surname
+                            td= val.email
+                            td= val.class
+                            td 
+                                a(href="/View_Student/"+ val.id)
+                                    button(type="button") show profile
+                            td 
+                                a(href="/Update_Student/"+ val.id )
+                                    button(type="button") Edit
+                            td 
+                                a(href="/Delete_Student/"+ val.id)
+                                    button(type="button") Delete
+                                    
+                    
+
+            br
+            br
+            div.form-group
+                button.btn.btn-primary(type="submit" style="margin-right: 16px") Back  
+                    
+        script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js", integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN", crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js", integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q", crossorigin="anonymous")
+        

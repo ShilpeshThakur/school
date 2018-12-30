@@ -1,0 +1,64 @@
+doctype html
+html
+    head
+        link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', rel='stylesheet', integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm", crossorigin="anonymous")
+    
+        title=name
+    body
+        div.container
+
+            br
+            br
+            h1 Create Teacher
+            br
+            form(method='POST' action='/Add_Teacher') 
+                div.form-inline
+                    label(for = "name" style="margin-right: 50px") Name :  
+                    input.form-control(type="text", name="name")
+                br
+                div.form-inline
+                    label(for = "surname" style="margin-right: 26px") SurName :  
+                    input.form-control(type="text", name="surname")
+                
+                
+                br
+                div.form-inline
+                    label(for = "email" style="margin-right: 56px") Email :  
+                    input.form-control(type="email", name="email")
+
+                br
+                div.form-inline
+                    label(for = "contact" style="margin-right: 14px") Mobile No. :  
+                    input.form-control(type="number", name="contact")
+
+                br
+                div.form-inline
+                    label(for = "address" style="margin-right: 36px") Address :  
+                    input.form-control(type="text", name="address")
+
+                br
+                div.form-inline
+                    label(for = "qauli" style="margin-right: 14px") Educational Qualification :  
+                    input.form-control(type="text", name="qualification")
+                
+                br
+                div.form-inline
+                    label(for = "u_name" style="margin-right: 16px") User Name :  
+                    input.form-control(type="text", name="username")
+                
+                br
+                div.form-inline
+                    label(for = "pwd" style="margin-right: 30px") Password :  
+                    input.form-control(type="Password", name="password")
+                
+
+                br
+                br
+                div.form-group
+                    button.btn.btn-primary(type="submit" style="margin-right: 32px") Create 
+                    button.btn.btn-primary(type="reset" style="margin-right: 32px") Reset 
+                    
+                        
+        script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js", integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN", crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js", integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q", crossorigin="anonymous")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl", crossorigin="anonymous")

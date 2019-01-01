@@ -18,7 +18,7 @@ html
                 button.btn.btn-primary(type="button" style="margin-right: 16px") Show My Profile
              br
             br
-            a(href="/Add_Teacher/"+ adminid)
+            a(href="/Add_Teacher")
                 button.btn.btn-primary(type="button" style="margin-right: 16px") Add Teacher
             br
             br
@@ -42,7 +42,7 @@ html
                             td= val.qualification
                             td 
                                 a(href="/View_Teacher/"+ val.id)
-                                    button.btn.btn-primary(type="button") Show profile
+                                    button.btn.btn-primary(type="button") Show details
                             td 
                                 a(href="/Update_Teacher/"+ val.id )
                                    button.btn.btn-primary(type="button") 
@@ -62,7 +62,7 @@ html
                 button.btn.btn-primary(type="button" style="margin-right: 16px") Show My Profile
              br
             br
-            a(href="/Admin_Add_Student/"+ adminid)
+            a(href="/Admin_Add_Student")
                 button.btn.btn-primary(type="button" style="margin-right: 16px") Add Student
             br
             br
@@ -85,8 +85,8 @@ html
                             td= val1.email
                             td= val1.class
                             td 
-                                a(href="/View_Student/"+ val1.id)
-                                    button.btn.button.btn-primary(type="button") Show profile
+                                a(href="/Admin_View_Student/"+ val1.id)
+                                    button.btn.button.btn-primary(type="button") Show details
                             td 
                                 a(href="/Admin_Update_Student/"+ val1.id )
                                     button.btn.btn-primary(type="button" ) 
@@ -106,7 +106,7 @@ html
                 button.btn.btn-primary(type="button" style="margin-right: 16px") Show My Profile
              br
             br
-            a(href="/Admin_Add_Notice/"+adminid)
+            a(href="/Admin_Add_Notice")
                 button.btn.btn-primary(type="button" style="margin-right: 16px") Add Notice
             br
             br
@@ -141,6 +141,9 @@ html
                                         i.fa.fa-trash
                                         |  Trash                 
 
+            br
+            a(href="/Admin/Logout")
+                button.btn.btn-primary(type="button" style="margin-right: 16px") Log Out
             br
             br
                     

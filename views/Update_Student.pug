@@ -14,38 +14,38 @@ html
             form(action="/Update_Student/"+ student.id, method="post")
                 div.form-inline
                     label(for = "name" style="margin-right: 50px") Name :  
-                    input.form-control(type="text", name="name" value= student.name)
+                    input.form-control(type="text", name="name", required='' value= student.name)
                 br
                 div.form-inline
                     label(for = "surname" style="margin-right: 26px") SurName :  
-                    input.form-control(type="text", name="surname" value= student.surname)
+                    input.form-control(type="text", name="surname", required='' value= student.surname)
 
                 br
                 div.form-inline
                     label(for = "email" style="margin-right: 56px") Email :  
-                    input.form-control(type="email", name="email" value= student.email)
+                    input.form-control(type="email", name="email", required='' value= student.email)
 
                 br
                 div.form-inline
                     label(for = "contact" style="margin-right: 14px") Mobile No. :  
-                    input.form-control(type="number", name="contact" value= student.contact)
+                    input.form-control(type="number", name="contact", required='' value= student.contact)
 
                 br
                 div.form-inline
                     label(for = "address" style="margin-right: 36px") Address :  
-                    input.form-control(type="text", name="address" value= student.address)
+                    input.form-control(type="text", name="address", required='' value= student.address)
 
                 br
                 div.form-inline
                     label(for = "cls" style="margin-right: 56px") Class :  
-                    input.form-control(type="text", name="cls" value= student.class)
+                    input.form-control(type="text", name="cls", required='' value= student.class)
                 
                 
                 br
                 
                 div.form-inline
                     label(for = "pwd" style="margin-right: 30px") Password :  
-                    input.form-control(type="Password", name="pwd" value= student.password)
+                    input.form-control(type="Password", name="pwd", required='' value= student.password)
                 
                 br
 

@@ -52,7 +52,7 @@ app.get('/', function(req, res){
                     'description':rows[i].description,
                     
                 }
-                // Add object into array
+                // Add o bject into array
                 noticeList.push(notice);
             } 
             console.log(noticeList);
@@ -104,6 +104,40 @@ app.post('/register', function(req, res){
     });    
 });
 
+app.post('/register_Student', function(req, res){
+
+    var connection = getMySQLConnection();
+    
+    
+    connection.connect();
+    var student = {
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        contact: req.body.contact,
+        class: req.body.cls,
+        username: req.body.u_name,
+        password: req.body.pwd,
+        address: req.body.address
+    }
+    // console.log(student);
+    
+    connection.query("insert into student(name, surname, email, contact, class, username, password, address) values('"+student.name+"', '"+student.surname+"','"+student.email+"','"+student.contact+"','"+student.class+"', '"+student.username+"', '"+student.password+"', '"+student.address+"')", function(err, rows, fields) {
+        if (err) {
+            // res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
+            res.render('Add_Student', {
+                message: 'Something went wrong'+err
+            });
+        }
+        var hrefpath=req.headers.referer;
+        var destid = hrefpath.split('/').pop();
+        
+        res.redirect('/Teacher_Record/'+destid);
+        connection.end();
+
+    });    
+});
+
 app.post('/Add_Teacher', function(req, res){
     var connection = getMySQLConnection();
     
@@ -136,6 +170,37 @@ app.post('/Add_Teacher', function(req, res){
 
     });
 });
+
+app.post('/Admin_Add_Notice', function(req, res){
+    var connection = getMySQLConnection();
+    
+    
+    connection.connect();
+    var notice = {
+       title: req.body.title,
+       description: req.body.description
+     
+    }
+    //  console.log(teacher);
+    
+    connection.query("insert into notice(title,description) values('"+notice.title+"', '"+notice.description+"')", function(err, rows, fields) {
+        if (err) {
+            // res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
+            res.render('Admin_Add_Notice', {
+                message: 'Something went wrong'+err
+            });
+        }
+        var hrefpath=req.headers.referer;
+        var destid = hrefpath.split('/').pop();
+        console.log(req.headers.referer);
+
+
+        res.redirect('/Teacher_Record/'+destid);
+        connection.end();
+
+    });
+});
+
 
 
 app.get('/Home', function(req, res){
@@ -258,8 +323,7 @@ app.get('/Teacher_Profile/:id', function(req, res){
 
                     
                 // Add object into array
-                // studentList.push(student);
-                console.log(teacher);
+                // console.log(teacher);
                 
                 res.render('Teacher_Profile', {
                     teacher: teacher
@@ -276,19 +340,36 @@ app.get('/Teacher_Profile/:id', function(req, res){
 
 app.get('/Add_Student/:id', function(req, res){
 
-    console.log('I m here');
+    //console.log('I m here');
     res.render('Add_Student', {
+
+    });
+});
+
+app.get('/Admin_Add_Student/:id', function(req, res){
+
+    console.log('I m in admin_add_student');
+    res.render('Admin_Add_Student', {
 
     });
 });
 
 app.get('/Add_Teacher/:id', function(req, res){
 
-    console.log('I m here');
+    // console.log('I m here');
     res.render('Add_Teacher', {
 
     });
 });
+
+app.get('/Admin_Add_Notice/:id', function(req, res){
+
+    // console.log('I m here');
+    res.render('Admin_Add_Notice', {
+
+    });
+});
+
 
 
 app.get('/View_Teacher/:id', function(req, res){
@@ -335,7 +416,6 @@ app.get('/View_Teacher/:id', function(req, res){
 
 app.get('/View_Student/:id', function(req, res){
 
-
     // var studentList = [];
     var connection = getMySQLConnection();
     connection.connect();
@@ -374,9 +454,41 @@ app.get('/View_Student/:id', function(req, res){
     // res.status(200).json({"status_code":200,"status_message": "success", 'data': studentList });        
     connection.end();
     
+});
 
+app.get('/View_Notice/:id', function(req, res){
 
+    // var studentList = [];
+    var connection = getMySQLConnection();
+    connection.connect();
+    console.log(req.params.id);
+    connection.query("select * from notice where id = "+req.params.id, function(err, rows, fields) {
+        if (err) {
+            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
+        }
+        else{
+            
 
+                // Create an object to save current row's data
+                let notice = {
+                    'title':rows[0].title,
+                    'description':rows[0].description,
+                }
+                // Add object into array
+                // studentList.push(student);
+                console.log(notice);
+                
+                res.render('View_Notice', {
+                    notice: notice
+                });
+                
+            
+        }
+        
+
+    });
+    // res.status(200).json({"status_code":200,"status_message": "success", 'data': studentList });        
+    connection.end();
     
 });
 
@@ -503,6 +615,83 @@ app.post('/Update_Student/:id', function(req, res){
     });    
 });
 
+app.get('/Admin_Update_Student/:id', function(req, res){
+
+    var connection = getMySQLConnection();
+    connection.connect();
+
+    connection.query("select * from student where id = "+req.params.id, function(err, rows, fields) {
+        if (err) {
+            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
+        }
+        else{
+            var hrefpath=req.headers.referer;
+            var destid = hrefpath.split('/').pop();
+
+                // Create an object to save current row's data
+                let student = {
+                    'name':rows[0].name,
+                    'surname':rows[0].surname,
+                    'contact':rows[0].contact,
+                    'id':rows[0].id,
+                    'email':rows[0].email,
+                    'class':rows[0].class,
+                    'address':rows[0].address,
+                    'username':rows[0].username,
+                    'password':rows[0].password,
+                    'modifier':destid
+                }
+                // Add object into array
+                // studentList.push(student);
+                console.log(student);
+                
+                res.render('Admin_Update_Student', {
+                    student: student
+                });
+                
+            
+        }
+        
+
+    });
+    // res.status(200).json({"status_code":200,"status_message": "success", 'data': studentList });        
+    connection.end();
+    
+
+});
+
+app.post('/Admin_Update_Student/:id', function(req, res){
+
+    var connection = getMySQLConnection();
+    
+    console.log(req.body);
+
+    connection.connect();
+    var student = {
+        id:req.params.id,
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        contact: req.body.contact,
+        class: req.body.cls,
+        password: req.body.pwd,
+        address: req.body.address
+    }
+    console.log(student);
+    
+    connection.query("update student set name = '"+student.name+"' , surname = '"+student.surname+"' , email = '"+student.email+"' , contact = '"+student.contact+"' , class = '"+student.class+"' , password = '"+student.password+"' , address = '"+student.address+"' where id = "+student.id+" " , function(err, rows, fields) {
+        if (err) {
+            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
+            
+        }
+        // res.status(200).json({"status_code":200,"status_message": "success"});
+        res.redirect('/Teacher_Record/'+req.body.modi);
+        connection.end();
+
+    });    
+});
+
+
 app.get('/Update_Teacher/:id', function(req, res){
 
     var connection = getMySQLConnection();
@@ -543,10 +732,8 @@ app.get('/Update_Teacher/:id', function(req, res){
 
 app.post('/Update_Teacher/:id', function(req, res){
 
-    var connection = getMySQLConnection();
-    
-    console.log(req.body);
-
+    var connection = getMySQLConnection();  
+    //console.log(req.body);
     connection.connect();
     var teacher = {
         id:req.params.id,
@@ -562,8 +749,7 @@ app.post('/Update_Teacher/:id', function(req, res){
     
     connection.query("update teacher set name = '"+teacher.name+"' , surname = '"+teacher.surname+"' , email = '"+teacher.email+"' , contact = '"+teacher.contact+"' , qualification = '"+teacher.qualification+"' , password = '"+teacher.password+"' , address = '"+teacher.address+"' where id = "+teacher.id+" " , function(err, rows, fields) {
         if (err) {
-            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
-            
+            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});            
         }
         // res.status(200).json({"status_code":200,"status_message": "success"});
         res.redirect('/Teacher_Record/'+req.params.id);
@@ -571,6 +757,74 @@ app.post('/Update_Teacher/:id', function(req, res){
 
     });    
 });
+
+
+app.get('/Admin_Update_Notice/:id' ,function(req,res){
+
+    var connection =getMySQLConnection();
+    connection.connect();
+
+    connection.query("select * from notice where id = "+req.params.id, function(err, rows, fields) {
+        if (err) {
+            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
+        }
+        else{
+            
+            var hrefpath=req.headers.referer;
+            var destid = hrefpath.split('/').pop();
+
+            
+                // Create an object to save current row's data
+                let notice = {
+                    'title':rows[0].title,
+                    'description':rows[0].description,
+                    'id':rows[0].id,
+                    'modi':destid
+                }
+                // Add object into array
+                // studentList.push(student);
+                console.log("attention here");
+                console.log(notice.modi);
+                
+                res.render('Admin_Update_Notice', {
+                    notice : notice
+                });            
+        }    
+    });
+    // res.status(200).json({"status_code":200,"status_message": "success", 'data': studentList });        
+    connection.end();
+    
+});
+
+app.post('/Admin_Update_Notice/:id',function(req,res){
+    var connection = getMySQLConnection();  
+    //console.log(req.body);
+    connection.connect();
+
+    console.log(req.body);
+
+    var notice = {
+        id:req.params.id,
+        title: req.body.title,
+        description: req.body.description
+        
+    }
+    console.log(notice);
+    
+    connection.query("update notice set title = '"+notice.title+"' , description = '"+notice.description+"' where id = "+notice.id+" " , function(err, rows, fields) {
+        if (err) {
+            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});            
+        }
+        // res.status(200).json({"status_code":200,"status_message": "success"});
+    
+        res.redirect('/Teacher_Record/'+req.body.modi);
+        connection.end();
+
+    });
+
+
+});
+
 
 app.get('/Delete_Student/:id', function(req, res){
 
@@ -591,6 +845,30 @@ app.get('/Delete_Student/:id', function(req, res){
         var destid = hrefpath.split('/').pop();
 
         res.redirect('/Student_Record/'+ destid);
+        connection.end();
+
+    });    
+});
+
+app.get('/Admin_Delete_Student/:id', function(req, res){
+
+    var connection = getMySQLConnection();
+    
+    console.log(req.body);
+
+    connection.connect();
+    
+    
+    connection.query("delete from student  where id = "+req.params.id+" " , function(err, rows, fields) {
+        if (err) {
+            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
+            
+        }
+        // res.status(200).json({"status_code":200,"status_message": "success"});
+        var hrefpath=req.headers.referer;
+        var destid = hrefpath.split('/').pop();
+
+        res.redirect('/Teacher_Record/'+ destid);
         connection.end();
 
     });    
@@ -621,6 +899,29 @@ app.get('/Delete_Teacher/:id', function(req, res){
     });    
 });
 
+app.get('/Admin_Delete_Notice/:id', function(req, res){
+
+    var connection = getMySQLConnection();
+    
+   // console.log(req.body);
+
+    connection.connect();
+
+    connection.query("delete from notice where id = "+req.params.id+" " , function(err, rows, fields) {
+        if (err) {
+            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
+            
+        }
+       
+        // res.status(200).json({"status_code":200,"status_message": "success"});
+        var hrefpath=req.headers.referer;
+        var destid = hrefpath.split('/').pop();
+        console.log(destid);
+        res.redirect('/Teacher_Record/'+ destid);
+        connection.end();
+
+    });    
+});
 
 app.get('/Student_Record/:id',function(req,res){
     
@@ -671,6 +972,7 @@ app.get('/Teacher_Record/:id',function(req,res){
     
     var teacherList = [];
     var studentList = [];
+    var noticeList =[];
     var connection = getMySQLConnection();
     connection.connect();
 
@@ -694,18 +996,72 @@ app.get('/Teacher_Record/:id',function(req,res){
                 }
                 // Add object into array
                 teacherList.push(teacher);
+                //console.log(teacherList);
             } 
-            console.log(teacherList);
-            
-            res.render('Teacher_Record',{
-                teacherList: teacherList,
-                adminid : req.params.id
-
-            });           
+               
         }
     });
 
-    
+    connection.query("select * from notice", function(err, rows, fields) {
+        if (err) {
+            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
+        }
+        else{
+            for (var i = 0; i < rows.length; i++) {
+
+                // Create an object to save current row's data
+                let notice = {
+                    'id': rows[i].id,
+                    'title':rows[i].title,
+                    'description':rows[i].description
+                    
+                }
+                // Add object into array
+                noticeList.push(notice);
+                //console.log(noticeList);
+            } 
+               
+        }
+    });
+
+
+    connection.query("select * from student", function(err, rows, fields) {
+        if (err) {
+            res.status(500).json({"status_code": 500,"status_message": "internal server error", 'error': err});
+        }
+        else{
+            for (var i = 0; i < rows.length; i++) {
+
+                // Create an object to save current row's data
+                let student = {
+                    'name':rows[i].name,
+                    'surname':rows[i].surname,
+                    'contact':rows[i].contact,
+                    'id':rows[i].id,
+                    'email':rows[i].email,
+                    'class':rows[i].class,
+                    'address':rows[i].address,
+                    'username':rows[i].username
+                }
+                // Add object into array
+                studentList.push(student);
+                console.log(teacherList);
+
+                
+            }
+            res.render('Teacher_Record',{
+                teacherList: teacherList,
+                studentList: studentList,
+                noticeList: noticeList,
+                adminid : req.params.id
+
+            }); 
+                    
+        }
+    });
+    //console.log(teacherList);
+            
+               
     // res.status(200).json({"status_code":200,"status_message": "success", 'data': studentList });        
     connection.end();
     

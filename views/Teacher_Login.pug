@@ -4,21 +4,44 @@ html
         link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', rel='stylesheet', integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm", crossorigin="anonymous")
     
         title=name
+        link(href='https://codepen.io/anonrockproj/pen/JwOPYG.css', rel='stylesheet')
+        link(href='https://codepen.io/anonrockproj/pen/MZOWmJ.css', rel='stylesheet')
     body
+
+        header
+            nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+                a.navbar-brand(href='/') School Administration
+                button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarCollapse', aria-controls='navbarCollapse', aria-expanded='false', aria-label='Toggle navigation')
+                    span.navbar-toggler-icon
+                #navbarCollapse.collapse.navbar-collapse
+                    ul.navbar-nav.mr-auto
+                        li.nav-item.active
+                            a.nav-link(href='/')
+                                | Home 
+                                span.sr-only (current)
+                    form.form-inline.mt-2.mt-md-0
+                        button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Account
+
+        br
+
         div.container
-            form(action="/Teacher_Login", method="post")
+            form(action="/Teacher_Login", method="post").form-signin
+                h1 Teacher Login
                 div.form-group
                     label(for = "username") User Name :
-                    input.form-control#username(type="text", name="username")
+                    input.form-control#username(type="text", name="username", required='')
 
                 div.form-group
                     label(for = "password") Password
-                    input.form-control#pwd(type="password", name="password")
+                    input.form-control#pwd(type="password", name="password", required='')
                 
                 div.form-group
                     button.btn.btn-primary(type="submit" style="margin-right: 16px") Log In 
                     button.btn.btn-primary(type="reset" style="margin-right: 16px") Reset 
-                
+
+        footer.footer.text-left
+                .container
+                    span.text-muted Made By - Shilpesh Thakur © 2018.                    
                         
         script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js", integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN", crossorigin="anonymous")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js", integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q", crossorigin="anonymous")
